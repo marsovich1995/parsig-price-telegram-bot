@@ -45,8 +45,8 @@ def check_text(text):
 
 def chek_url(url,params = False):
     # pattern_url = regex.compile(r'(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/*?') # обнаужить любой url
-    pattern = regex.compile(r'(m\.chitai-gorod.ru\/catalog\/book\/\d+)|(www\.chitai-gorod.ru\/catalog\/book\/\d+)|(?<!(\.|\w))(chitai-gorod\.ru\/catalog\/book\/\d+)')
-    pattern_id = regex.compile(r'(?<=book\/)\d+')
+    pattern = re.compile(r'(m\.chitai-gorod.ru\/catalog\/book\/\d+)|(www\.chitai-gorod.ru\/catalog\/book\/\d+)|(?<!(\.|\w))(chitai-gorod\.ru\/catalog\/book\/\d+)')
+    pattern_id = re.compile(r'(?<=book\/)\d+')
     # pattern = regex.compile(r'chitai-gorod\.ru\/catalog\/book\/\d+')
     # wrong_url = pattern_url.findall(url.lower())
     text=pattern.findall(url.lower())

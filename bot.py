@@ -6,7 +6,7 @@ from conf import token_
 from get import chek_url, get_data_serch, get_similar_value, get_id_by_url, get_exact_book, check_text
 
 db = SQLighter('db.db') # Подключение к Базе
-
+# chats = {}
 bot = Bot(token = token_)
 dp = Dispatcher(bot)
 
@@ -30,8 +30,9 @@ async def process_callback_button1(callback_query: types.CallbackQuery):
         db.update_subscription(callback_query.from_user.id,True) #Активация подписки
 
     elif code == 1: #Нет
-        
+        # print(chats[callback_query.from_user.id])
         await bot.answer_callback_query(callback_query.id)
+        # del chats[callback_query.from_user.id]
 
     else:
         await bot.answer_callback_query(callback_query.id)
@@ -58,6 +59,7 @@ async def unsubscribe(message: types.Message):
 def answer_search(message, i, data_json ):
 
     if isinstance(i,int):
+        # chats[message.from_user.id] = {data_json['hits']['hits'][i]['_source']['book_id'], message.message_id}
         db.update_subscription_last_request(message.from_user.id,data_json['hits']['hits'][i]['_source']['book_id'],message.message_id ) #запоминает в БД последний запрос и id message
         return message.reply('Получать оповещения об изменении цены\n*' + \
                 data_json['hits']['hits'][i]['_source']['name'] + '*?', parse_mode= 'Markdown', reply_markup=inline_kb1)    
@@ -92,41 +94,6 @@ async def echo(message: types.Message):
             await answer_search(message, i,data_json)
         else:
             await message.reply('Слишком длиное название')
-
-
-
-
-    # if chek_url(text) == 2: # url распозднан но не входит в число допутимых
-    #     await message.reply('Неправильный url')
-    # elif len(text) < 50:   # если длина меньше 50 символов     
-    #     if chek_url(text): # url распозднан и входит в число допутимых
-    #         url = chek_url(text,True) # Возвращает общий url вида https://www.chitai-gorod.ru/catalog/book/0000000/'
-    #         try:
-    #             text = str(get_id_by_url(url)) #get id by url
-    #         except: 
-    #             print('get_id_by_url  error ')
-    #             # await message.reply('Поиск не дал результатов, попробуйте другой способ')
-    #     data_json = get_data_serch(text) #Поиск через API по гаванию или id_book
-    #     if data_json['_shards']['successful'] == 1 and data_json['hits']['total']['value'] == 1: #Если успешно и только один результат 
-
-    #         await message.reply('Получать оповещения об изменении цены\n*' + data_json['hits']['hits'][0]['_source']['name'] + '*?', parse_mode= 'Markdown', reply_markup=inline_kb1)
-    #         db.update_subscription_last_request(message.from_user.id,data_json['hits']['hits'][0]['_source']['book_id'],message.message_id ) #запоминает в БД последний запрос и id message
-
-    #     elif data_json['_shards']['successful'] == 1 and data_json['hits']['total']['value'] > 1: #Если успешно и только несколько результататов
-
-    #         a = get_similar_value(data_json,text) #Находим индекс наиболее подходяшего результата
-
-    #         if isinstance(a,int): #Если индекс целое
-    #             await message.reply('Получать оповещения об изменении цены\n*' + data_json['hits']['hits'][a]['_source']['name'] + '*?', parse_mode= 'Markdown', reply_markup=inline_kb1)
-    #             db.update_subscription_last_request(message.from_user.id,data_json['hits']['hits'][a]['_source']['book_id'],message.message_id ) 
-    #         else:
-    #             await message.reply('Поиск не дал результатов, попробуйте другой способ')  
-                    
-    #     else:
-    #         await message.reply('Поиск не дал результатов, попробуйте другой способ')  
-
-    # else:
-    #     await message.reply('Слишком длиное название')
 
 async def parsing(wait_for):
 
