@@ -1,11 +1,7 @@
 import requests
 import difflib
 import json
-<<<<<<< HEAD
 import re
-=======
-# import regex
->>>>>>> 069490bf069ecbd48a6755742e40ea1f5216129b
 # from bs4 import BeautifulSoup
 from conf import url_for_search
 from my_html_parser import FindBookId
@@ -35,13 +31,9 @@ def get_id_by_url(url):
         raise IOError("host error")
 
 def check_text(text):
-<<<<<<< HEAD
+
     pattern_url = re.compile(r'(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/*?') # обнаужить любой url
     pattern_id_book = re.compile(r'^\b\d{7}\b$') # обнаужить любой url
-=======
-    pattern_url = regex.compile(r'(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/*?') # обнаужить любой url
-    pattern_id_book = regex.compile(r'^\b\d{7}\b$') # обнаужить любой url
->>>>>>> 069490bf069ecbd48a6755742e40ea1f5216129b
     url=pattern_url.findall(text.lower())
     id_book = pattern_id_book.findall(text)
     if url:
