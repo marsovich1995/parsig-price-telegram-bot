@@ -38,13 +38,6 @@ class SQLighter:
         with self.connection:
             return self.cursor.execute("UPDATE `subscriptions` SET `alerts_sent` = `alerts_sent` + ? WHERE `user_id` = ?", (i,user_id))
 
-
-    # def update_subscription_data(self, user_id, url, price, status = True):
-    #     """Обновляем url и цену у подписки"""
-    #     with self.connection:
-    #         return self.cursor.execute("UPDATE `subscriptions` SET `url` = ? , `price` = ?, `status` = ? WHERE `user_id` = ?", (url, price, status, user_id))            
-
-
     def update_subscription_last_request(self, user_id, last_request, last_message_id):
         """Обновляем last_request"""
         with self.connection:
