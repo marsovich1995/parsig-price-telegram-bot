@@ -125,5 +125,5 @@ async def parsing(wait_for):
 
 
 if __name__ == '__main__':
-    loop.create_task(parsing(20))
+    loop.create_task(parsing(30))
     executor.start_polling(dp, skip_updates=True)
